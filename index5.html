@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K3 MART</title>
+    <link rel="stylesheet" href="style5.css">
+</head>
+<body>`
+    <!-- HEADER -->
+   <header>
+        <div class="logo">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.WqHvBzpz6y7Vm-t6UtH_SQHaHa?pid=Api&P=0&h=180" alt="K3 Mart Logo">
+            <h1>K3 MART</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showHome()">Home</a></li>
+                <li><a href="#" onclick="showAbout()">About</a></li>
+                <li><a href="#" onclick="showCart()">Cart (<span id="cart-count">0</span>)</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- BODY -->
+    <main>
+        <!-- Home Page -->
+       <section id="home-section">
+            <div class="categories">
+                <div class="category" onclick="showProducts('mobile')">
+                    <img src="https://tse2.mm.bing.net/th/id/OIP.-3GFF5TzebzHRc6dC8walgHaE7?pid=Api&P=0&h=180" alt="Mobiles">
+                    <h2>Mobiles</h2>
+                </div>
+                <div class="category" onclick="showProducts('laptop')">
+                    <img src="https://tse1.mm.bing.net/th/id/OIP.9UTicF_g9McgJZceUJBKeQHaHa?pid=Api&P=0&h=180" alt="Laptops">
+                    <h2>Laptops</h2>
+                </div>
+                <div class="category" onclick="showProducts('headphone')">
+                    <img src="https://tse4.mm.bing.net/th/id/OIP.dBYprP22IXSIgCj0CyziUwHaHa?pid=Api&P=0&h=180" alt="Headphones">
+                    <h2>Headphones</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Page -->
+        <section id="products-section" style="display:none;">
+            <h2 id="product-title"></h2>
+            <div class="product-list" id="product-list"></div>
+            <a href="index5.html" class="back-btn">← Back</a>
+        </section>
+
+        <!--about-->
+              <section id="about-section" style="display:none;">
+    <div class="about-container">
+        <h2>About Us</h2>
+         <p>
+      Welcome to K3 MART. This Ecommerce Website project is developed as part of my academic learning.  
+      It highlights my skills in Web Development and is created with the guidance and support of my respected mentors.
+
+      # Guided by - DR.Anil Patil Sir   /   Tahir mansuri sir.
+
+      The aim of this project is to design a simple yet effective Ecommerce platform named K3 Mart,  
+      where users can browse products, add items to their cart, and generate invoices with ease.
+         </p>
+    </div>
+       </section>
+
+        <!--cart-->
+     <section id="cart-section" style="display:none;">
+        <h2>Your Cart</h2>
+        <div id="cart-items" class="cart-items-container"></div> 
+        <div class="cart-footer">
+        <button class="cart-btn back-btn" onclick="showHome()">⬅ Back</button>
+        <button class="cart-btn proceed-btn" onclick="proceedToCheckout()">Proceed Now ➡</button>
+        </div>
+     </section>
+
+
+        <!--order page-->
+        <centre>
+      <section id="order-section" style="display:none;">
+    <div id="order-form-container">
+        <h2>Order Form</h2>
+        <form id="order-form">
+            <input type="text" placeholder="Name" required>
+            <input type="tel" placeholder="Mobile Number" required>
+            <input type="email" placeholder="Email ID" required>
+            <input type="text" placeholder="Pincode" required>
+            <button type="submit">Confirm Order</button>
+        </form>
+    </div>
+      </section>
+      </centre>
+   <section id="invoice-section" style="display:none;">
+    <div class="invoice-box">
+        <h2>Invoice</h2>
+        <div id="invoice-details"></div>
+        <div class="success-msg">✅ Purchase Successful</div>
+        <button onclick="showHome()">Back to Home</button>
+    </div>
+   </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <img src="https://stcimrd.ac.in/images/imr_logo.png" alt="College Logo">
+            <div>
+                <h3>Institute of Management Research & Development, Shahada</h3><br>
+                <p>by - Ketan sonawane</p><br>
+                <p>Sonawaneketan92@gmail.com</p><br>
+            </div>
+        </div>
+    </footer>
+
+   <script>
+const products = {
+    mobile: [
+        { name: "Redmi Note 9 Pro", price: 15000, img: "https://fdn2.gsmarena.com/vv/bigpic/xiaomi-redmi-note-9-pro-global-.jpg" },
+        { name: "Samsung Galaxy S25 Ultra", price: 70999, img: "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s25-ultra-sm-s938.jpg" },
+        { name: "iPhone 15 Pro Max", price: 139999, img: "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-15-pro-max.jpg" },
+        { name: "OnePlus 12", price: 65000, img: "https://fdn2.gsmarena.com/vv/bigpic/oneplus-12.jpg" },
+        { name: "Realme GT 5", price: 37999, img: "https://fdn2.gsmarena.com/vv/bigpic/realme-gt5.jpg" },
+        { name: "Vivo X100 Pro", price: 85999, img: "https://fdn2.gsmarena.com/vv/bigpic/vivo-x100-pro.jpg" },
+        { name: "Poco X6 Pro", price: 24999, img: "https://fdn2.gsmarena.com/vv/bigpic/xiaomi-poco-x6-pro.jpg" },
+        { name: "Google Pixel 8 Pro", price: 99999, img: "https://fdn2.gsmarena.com/vv/bigpic/google-pixel-8-pro.jpg" },
+        { name: "Motorola Edge 40 Pro", price: 69999, img: "https://fdn2.gsmarena.com/vv/bigpic/motorola-edge-40-pro.jpg" },
+        { name: "Asus ROG Phone 7", price: 84999, img: "https://fdn2.gsmarena.com/vv/bigpic/asus-rog-phone-7.jpg" }
+    ],
+    laptop: [
+        { name: "HP Pavilion", price: 55000, img: "https://laptopmedia.com/wp-content/uploads/2019/11/5-37-680x492.jpg" },
+        { name: "Dell Inspiron", price: 60000, img: "https://i.gadgets360cdn.com/products/large/611sqL-1ouL.-SL1080-800x577-1754391225.jpg?downsize=*:180" },
+        { name: "MacBook Air M2", price: 115000, img: "https://m.media-amazon.com/images/I/719C6bJv8jL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "Asus ZenBook Pro", price: 125000, img: "https://m.media-amazon.com/images/I/71WwhL-I+hL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "Lenovo Legion 5", price: 98000, img: "https://m.media-amazon.com/images/I/8149ThY8zAL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "Acer Predator Helios", price: 140000, img: "https://m.media-amazon.com/images/I/51S7YnmsUnL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "Microsoft Surface Laptop 5", price: 150000, img: "https://m.media-amazon.com/images/I/510uTHyDqGL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "HP Omen 16", price: 120000, img: "https://m.media-amazon.com/images/I/71UmfFG5RAL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "Razer Blade 15", price: 200000, img: "https://m.media-amazon.com/images/I/719atypOUGL._AC_UY327_FMwebp_QL65_.jpg" },
+        { name: "Dell XPS 15", price: 190000, img: "https://m.media-amazon.com/images/I/71wjrolqU4L._AC_UY327_FMwebp_QL65_.jpg" }
+    ],
+    headphone: [
+        { name: "Boat Rockerz", price: 1500, img: "https://tse3.mm.bing.net/th/id/OIP.ReobY5vfBjrzD-vkBRB_lAHaHa?pid=Api&P=0&h=180" },
+        { name: "Sony WH-1000XM4", price: 25000, img: "https://tse4.mm.bing.net/th/id/OIP.kV1q2S6VBO1LhBU7TS0ONgHaHa?pid=Api&P=0&h=180" },
+        { name: "JBL Tune 760NC", price: 7999, img: "https://tse1.mm.bing.net/th/id/OIP.cPv2I4pnCvbxNxIyMk03yQHaIn?pid=Api&P=0&h=180" },
+        { name: "Bose QuietComfort 45", price: 29999, img: "https://tse2.mm.bing.net/th/id/OIP.aA5bRIufQxE1-KSZFEz5LQHaJz?pid=Api&P=0&h=180" },
+        { name: "Sennheiser HD 450BT", price: 9999, img: "https://tse4.mm.bing.net/th/id/OIP.wcV3JIPwCA49vm_H-fs-IgHaKN?pid=Api&P=0&h=180" },
+        { name: "Beats Studio3", price: 18999, img: "https://tse4.mm.bing.net/th/id/OIP.CCnX1iAufblEZ46Iw4DHkAHaH5?pid=Api&P=0&h=180" },
+        { name: "Skullcandy Crusher Evo", price: 12999, img: "https://tse2.mm.bing.net/th/id/OIP.gOIPgCou0gUay64rDGdiyQHaH3?pid=Api&P=0&h=180" },
+        { name: "Marshall Major IV", price: 14999, img: "https://tse3.mm.bing.net/th/id/OIP.H2xSRWrO_j56HN8hATYH4wHaHa?pid=Api&P=0&h=180" },
+        { name: "AKG K371", price: 8999, img: "https://tse4.mm.bing.net/th/id/OIP.yf2dxxzzkfvGpxgw5IgjJwHaHa?pid=Api&P=0&h=180" },
+        { name: "Philips SHP9600", price: 6999, img: "https://tse2.mm.bing.net/th/id/OIP.erOUJIHk-x_pB1JykngAnwHaHa?pid=Api&P=0&h=180" }
+    ]
+ };
+
+// Load cart from localStorage or empty array
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// Update cart count on page load
+document.getElementById("cart-count").innerText = cart.length;
+
+function saveCart() {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
+
+function showHome() {
+    hideAll();
+    document.getElementById("home-section").style.display = "block";
+}
+function showAbout() {
+    hideAll();
+    document.getElementById("about-section").style.display = "block";
+}
+
+
+function showProducts(category) {
+    hideAll();
+    const title = category.charAt(0).toUpperCase() + category.slice(1) + "s";
+    document.getElementById("product-title").innerText = title;
+    const list = document.getElementById("product-list");
+    list.innerHTML = "";
+    products[category].forEach(item => {
+        list.innerHTML += `
+            <div class="product">
+                <img src="${item.img}" alt="${item.name}">
+                <h3>${item.name}</h3>
+                <p>₹${item.price}</p>
+                <button onclick="addToCart('${item.name}', ${item.price})">Add to Cart</button>
+                <button onclick="buySingle('${item.name}', ${item.price})">Buy Now</button>
+            </div>
+        `;
+    });
+    document.getElementById("products-section").style.display = "block";
+}
+
+function addToCart(name, price) {
+    cart.push({ name, price });
+    saveCart();
+    document.getElementById("cart-count").innerText = cart.length;
+}
+
+function showCart() {
+    hideAll();
+    const list = document.getElementById("cart-items");
+    list.innerHTML = "";
+    cart.forEach(item => {
+        list.innerHTML += `<li>${item.name} - ₹${item.price}</li>`;
+    });
+    document.getElementById("cart-section").style.display = "block";
+}
+
+function buyNow() {
+    hideAll();
+    document.getElementById("order-section").style.display = "block";
+    document.getElementById("order-form").onsubmit = function(e) {
+        e.preventDefault();
+        generateInvoice(cart);
+    };
+}
+
+function buySingle(name, price) {
+    hideAll();
+    document.getElementById("order-section").style.display = "block";
+    document.getElementById("order-form").onsubmit = function(e) {
+        e.preventDefault();
+        generateInvoice([{ name, price }]);
+    };
+}
+function proceedToCheckout() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        showCart(); // stay on cart page
+        return;
+    }
+
+    hideAll();
+    document.getElementById("order-section").style.display = "block";
+    document.getElementById("order-form").onsubmit = function(e) {
+        e.preventDefault();
+        generateInvoice(cart);
+    };
+}
+
+
+function generateInvoice(items) {
+    hideAll();
+    let details = "";
+    let total = 0;
+
+    items.forEach(item => {
+        details += `<p>${item.name} <span style="float:right;">₹${item.price}</span></p>`;
+        total += item.price;
+    });
+
+    details += `<hr><h3>Total <span style="float:right;">₹${total}</span></h3>`;
+
+    document.getElementById("invoice-details").innerHTML = details;
+    document.getElementById("invoice-section").style.display = "block";
+
+    // Clear cart after purchase
+    cart = [];
+    saveCart();
+    document.getElementById("cart-count").innerText = 0;
+}
+
+function hideAll() {
+    document.querySelectorAll("main section").forEach(sec => sec.style.display = "none");
+}
+</script>
